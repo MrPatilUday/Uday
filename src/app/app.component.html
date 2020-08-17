@@ -1,0 +1,117 @@
+<div class="container">
+
+    <a style="cursor: pointer;" (click)="exportToExcel()" class="btn btn-primary mt-1">
+        Excel <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                d="M.5 8a.5.5 0 0 1 .5.5V12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5a.5.5 0 0 1 1 0V12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8.5A.5.5 0 0 1 .5 8z" />
+            <path fill-rule="evenodd"
+                d="M5 7.5a.5.5 0 0 1 .707 0L8 9.793 10.293 7.5a.5.5 0 1 1 .707.707l-2.646 2.647a.5.5 0 0 1-.708 0L5 8.207A.5.5 0 0 1 5 7.5z" />
+            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0v-8A.5.5 0 0 1 8 1z" />
+        </svg>
+    </a>
+
+    <a style="cursor: pointer;" (click)="saveAsCSV()" class="btn btn-primary mt-1 ml-2">
+        CSV <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                d="M.5 8a.5.5 0 0 1 .5.5V12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5a.5.5 0 0 1 1 0V12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8.5A.5.5 0 0 1 .5 8z" />
+            <path fill-rule="evenodd"
+                d="M5 7.5a.5.5 0 0 1 .707 0L8 9.793 10.293 7.5a.5.5 0 1 1 .707.707l-2.646 2.647a.5.5 0 0 1-.708 0L5 8.207A.5.5 0 0 1 5 7.5z" />
+            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0v-8A.5.5 0 0 1 8 1z" />
+        </svg>
+    </a>
+
+    <button class="btn btn-primary mt-1 ml-2" (click)="printTable()">Print</button>
+
+    <button class="btn btn-primary mt-1 ml-2" (click)="copytable('infoTable')">Copy To Clipboard</button>
+
+
+
+
+
+    <h1 class="mt-1 text-center text-primary font-weight-bold  ">Info Table</h1>
+
+
+    <input type="text" hidden #tblData getData>
+
+    <button [disabled]="isPrevDisabled" class="btn btn-primary mb-1" (click)="firstPage()">
+        << </button>
+            <button [disabled]="isPrevDisabled" class="btn btn-primary mb-1 ml-1"
+                (click)="previousPage(currentPage, lastValue)">
+                < </button>
+
+                    {{currentPage }}
+                    <span> / {{ totalPages }}</span>
+
+                    <button class="btn btn-primary mb-1 ml-1" (click)="nextPage(currentPage, lastValue)"
+                        [disabled]="isLastDisabled">
+                        >
+                    </button>
+                    <button class="btn btn-primary mb-1 ml-1" (click)="lstPage()" [disabled]="isLastDisabled">
+                        >>
+                    </button>
+
+                    <div class="float-right mb-1">
+                        <!-- <label class="text-primary" for="globalfilterid">Global Filter</label> -->
+                        <input class="mt-1 ml-2 text-center font-smaller" placeholder="Global Filter"
+                            id="globalfilterid" type="text" #globalFilter
+                            (input)="globalFilterMethod($event.target.value)">
+                    </div>
+
+                    <table class="table text-center" id="infoTable">
+                        <thead class=" ">
+                            <tr class="bg-primary">
+
+                                <th class="text-center" (click)="sort('id')">Id
+                                    <img class="ml-3 " src="{{imagePath}}" style="width:20px; height:15px;"
+                                        alt="Ascending Sort">
+                                </th>
+
+
+                                <th class="text-center" (click)="sort('first_name')">FirstName
+                                    <img class="ml-3 " src="{{imagePath}}" style="width:20px; height:15px;"
+                                        alt="Ascending Sort">
+                                </th>
+                                <th class="text-center" (click)="sort('last_name')">LastName
+                                    <img class="ml-3 " src="{{imagePath}}" style="width:20px; height:15px;"
+                                        alt="Ascending Sort">
+                                </th>
+                                <th class="text-center" (click)="sort('gender')">Gender
+                                    <img class="ml-3 " src="{{imagePath}}" style="width:20px; height:15px;"
+                                        alt="Ascending Sort">
+                                </th>
+                                <th class="text-center" (click)="sort('email')">Email
+                                    <img class="ml-3 " src="{{imagePath}}" style="width:20px; height:15px;"
+                                        alt="Ascending Sort">
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    <input type="text" #id (input)="filter('id',$event.target.value)"> </th>
+                                <th>
+                                    <input type="text" #first_name (input)="filter('first_name',$event.target.value)">
+                                </th>
+                                <th>
+                                    <input type="text" #last_name (input)="filter('last_name',$event.target.value)">
+                                </th>
+                                <th>
+                                    <input type="text" #gender (input)="filter('gender',$event.target.value)"> </th>
+                                <th>
+                                    <input type="text" #email (input)="filter('email',$event.target.value)"> </th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let i of getData">
+                                <td>{{i.id}}</td>
+                                <td>{{i.first_name}}</td>
+                                <td>{{i.last_name}}</td>
+                                <td>{{i.gender}}</td>
+                                <td>{{i.email}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+</div>
